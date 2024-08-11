@@ -231,7 +231,7 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(
     const imageDetailRef = modalRef ?? createRef<ImageDetail>()
     // If don't use useRef, animation will not work
     const originImageOpacity = useRef(new Animated.Value(VISIBLE_OPACITY)).current
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(true)
     const { originImageLayout, updateOriginImageLayout } = useOriginImageLayout({
       imageRef,
       isRTL,
@@ -280,45 +280,32 @@ const ImageModal = forwardRef<ReactNativeImageModal, Props>(
         ref={imageRef}
         style={[{ alignSelf: 'baseline', backgroundColor: imageBackgroundColor }]}
       >
-        <OriginImage
+        <ImageDetail
           source={source}
-          resizeMode={resizeMode}
-          imageOpacity={originImageOpacity}
+          resizeMode={modalImageResizeMode ?? resizeMode}
+          imageStyle={modalImageStyle}
+          ref={modalRef ?? imageDetailRef}
+          isOpen={true}
           renderToHardwareTextureAndroid={renderToHardwareTextureAndroid}
-          disabled={disabled}
-          style={style}
-          onDialogOpen={handleOpen}
-          onLongPressOriginImage={onLongPressOriginImage}
+          isTranslucent={isTranslucent}
+          origin={originImageLayout}
+          backgroundColor={overlayBackgroundColor}
+          swipeToDismiss={swipeToDismiss}
+          hideCloseButton={hideCloseButton}
+          parentLayout={parentLayout}
+          animationDuration={animationDuration}
+          renderHeader={renderHeader}
+          renderFooter={renderFooter}
           renderImageComponent={renderImageComponent}
+          onTap={onTap}
+          onDoubleTap={onDoubleTap}
+          onLongPress={onLongPress}
+          didOpen={didOpen}
+          onMove={onMove}
+          responderRelease={responderRelease}
+          willClose={willClose}
+          onClose={handleClose}
         />
-        {isModalOpen && (
-          <ImageDetail
-            source={source}
-            resizeMode={modalImageResizeMode ?? resizeMode}
-            imageStyle={modalImageStyle}
-            ref={modalRef ?? imageDetailRef}
-            isOpen={isModalOpen}
-            renderToHardwareTextureAndroid={renderToHardwareTextureAndroid}
-            isTranslucent={isTranslucent}
-            origin={originImageLayout}
-            backgroundColor={overlayBackgroundColor}
-            swipeToDismiss={swipeToDismiss}
-            hideCloseButton={hideCloseButton}
-            parentLayout={parentLayout}
-            animationDuration={animationDuration}
-            renderHeader={renderHeader}
-            renderFooter={renderFooter}
-            renderImageComponent={renderImageComponent}
-            onTap={onTap}
-            onDoubleTap={onDoubleTap}
-            onLongPress={onLongPress}
-            didOpen={didOpen}
-            onMove={onMove}
-            responderRelease={responderRelease}
-            willClose={willClose}
-            onClose={handleClose}
-          />
-        )}
       </View>
     )
   },

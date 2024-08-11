@@ -202,6 +202,9 @@ const ImageDetail = forwardRef<ImageDetail, Props>(
       close: handleClose,
     }))
 
+    alert(
+      '123123'
+    )
     return (
       <Modal
         hardwareAccelerated
